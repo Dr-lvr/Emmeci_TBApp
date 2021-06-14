@@ -7,28 +7,29 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTextEdit>
+#include <QtWidgets/QLabel>
 #include <QSignalMapper>
 
 QT_BEGIN_NAMESPACE
 
-class Ui_Dialog : public QDialog
-{
+class Ui_Dialog : public QDialog{
 public:
+    QLabel* label;
     QTextEdit* ListPath_Editor;
     QTextEdit* SourcePath_Editor;
     QTextEdit* DestinationPath_Editor;
     QPushButton* Submit_Button;
-    QPushButton* pushButton;
-    QPushButton* pushButton_2;
     QSignalMapper* mapper;
-
-    void logic(QString);
 
     void setupUi(QDialog* Dialog)
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QString::fromUtf8("Dialog"));
-        Dialog->resize(806, 404);
+        Dialog->resize(806, 215);
+        label = new QLabel(Dialog);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(630, 20, 161, 101));
+        label->setPixmap(QPixmap(QString::fromUtf8("C:/Users/ASUS/Desktop/EmmeciLogo.png")));
         ListPath_Editor = new QTextEdit(Dialog);
         ListPath_Editor->setObjectName(QString::fromUtf8("ListPath_Editor"));
         ListPath_Editor->setGeometry(QRect(10, 10, 591, 51));
@@ -48,18 +49,7 @@ public:
         Submit_Button->setEnabled(true);
         Submit_Button->setGeometry(QRect(610, 150, 191, 51));
         Submit_Button->setFont(font);
-        pushButton = new QPushButton(Dialog);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setEnabled(true);
-        pushButton->setGeometry(QRect(10, 220, 391, 181));
-        QFont font1;
-        font1.setPointSize(26);
-        pushButton->setFont(font1);
-        pushButton_2 = new QPushButton(Dialog);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setEnabled(false);
-        pushButton_2->setGeometry(QRect(410, 220, 391, 181));
-        pushButton_2->setFont(font1);
+        
         retranslateUi(Dialog);
         mapper = new QSignalMapper(this);
         
@@ -72,6 +62,7 @@ public:
             mapper, static_cast<void(QSignalMapper::*)()>(&QSignalMapper::map));
         mapper->setMapping(Submit_Button, ListPath_Editor->toPlainText());
 
+        //lambda connector
         connect(mapper, static_cast<void(QSignalMapper::*)(const QString&)>(&QSignalMapper::mapped),
             [=](const QString str) {
                 std::string strIn;
@@ -136,10 +127,7 @@ public:
         SourcePath_Editor->setPlaceholderText(QApplication::translate("Dialog", "Drop Source Path", nullptr));
         DestinationPath_Editor->setPlaceholderText(QApplication::translate("Dialog", "Drop Destination Path", nullptr));
         Submit_Button->setText(QApplication::translate("Dialog", "Submit Destination", nullptr));
-        pushButton->setText(QApplication::translate("Dialog", "Reset", nullptr));
-        pushButton_2->setText(QApplication::translate("Dialog", "Start Copy", nullptr));
     } // retranslateUi
-
 };
 namespace Ui {
     class Dialog : public Ui_Dialog {};

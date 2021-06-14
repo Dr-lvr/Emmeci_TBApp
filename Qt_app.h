@@ -15,8 +15,6 @@ class Qt_App : public QDialog {
 public:
     Qt_App(QWidget *parent = Q_NULLPTR);
 //public slots:
-    //void logic(QString);
-    //void tutorialMessage();
 private:
     Ui::Dialog ui;
 };
