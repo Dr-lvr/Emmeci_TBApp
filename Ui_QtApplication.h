@@ -70,25 +70,23 @@ public:
 
         connect(Submit_Button, &QPushButton::clicked,
             mapper, static_cast<void(QSignalMapper::*)()>(&QSignalMapper::map));
-        mapper->setMapping(Submit_Button, Submit_Button->text()); // by clicking a button will translate the text of the button,
+        mapper->setMapping(Submit_Button, ListPath_Editor->toPlainText());
 
-        // send text button from the mapper in the slot where the text will be set
         connect(mapper, static_cast<void(QSignalMapper::*)(const QString&)>(&QSignalMapper::mapped),
             [=](const QString str) {
-                //Submit_Button->setText(ListPath_Editor->toPlainText());
-                QMessageBox::information(NULL, "Validating data", str, QMessageBox::Ok);
                 std::string strIn;
                 std::fstream csvList;
                 std::stringstream sStream;
                 std::filesystem::current_path("C:/Users/ASUS/Desktop");
-                if (std::filesystem::is_regular_file("C:/Users/ASUS/Desktop/list.csv")) {
-                    csvList.open("C:/Users/ASUS/Desktop/list.csv", std::ios::in);
+                if (std::filesystem::is_regular_file(ListPath_Editor->toPlainText().toStdString())) {
+                    QMessageBox::information(NULL, "Validating data", ListPath_Editor->toPlainText(), QMessageBox::Ok);
+                    csvList.open(ListPath_Editor->toPlainText().toStdString(), std::ios::in);
                     if (csvList.is_open()) {
                         std::string csvLine;
                         std::smatch rgxMatch;
                         using namespace std::regex_constants;
                         while (std::getline(csvList, csvLine)) {
-                            for (auto& folder : std::filesystem::directory_iterator("input")) {
+                            for (auto& folder : std::filesystem::directory_iterator(SourcePath_Editor->toPlainText().toStdString())) {
                                 std::string directoyPath(folder.path().string());
                                 if (folder.is_directory() &&
                                     std::regex_search(
@@ -109,7 +107,7 @@ public:
                                                 std::regex(sStream.str(), ECMAScript))) {
                                             //QMessageBox::information(NULL, "", "Start Parsing Data", QMessageBox::Ok);
                                             try {
-                                                std::filesystem::copy(file.path(), "output");
+                                                std::filesystem::copy(file.path(), DestinationPath_Editor->toPlainText().toStdString());
                                             }
                                             catch (...) {
                                                 QMessageBox::information(NULL, "ALERT", "(!!!) FILE ALREADY COPIED (!!!)", QMessageBox::Ok);
