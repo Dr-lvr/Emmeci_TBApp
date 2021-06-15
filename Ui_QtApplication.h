@@ -77,6 +77,7 @@ public:
                         std::string csvLine;
                         std::smatch rgxMatch;
                         using namespace std::regex_constants;
+                        QMessageBox::information(NULL, "", "Start Parsing Data", QMessageBox::Ok);
                         while (std::getline(csvList, csvLine)) {
                             for (auto& folder : std::filesystem::directory_iterator(SourcePath_Editor->toPlainText().toStdString())) {
                                 std::string directoyPath(folder.path().string());
@@ -97,7 +98,6 @@ public:
                                                 filePath,
                                                 rgxMatch,
                                                 std::regex(sStream.str(), ECMAScript))) {
-                                            //QMessageBox::information(NULL, "", "Start Parsing Data", QMessageBox::Ok);
                                             try {
                                                 std::filesystem::copy(file.path(), DestinationPath_Editor->toPlainText().toStdString());
                                             }
