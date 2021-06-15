@@ -25,10 +25,11 @@ public:
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QString::fromUtf8("Dialog"));
-        Dialog->resize(806, 215);
+        //Dialog->resize(806, 215);
+        Dialog->setGeometry(QRect(559, 520, 806, 215));
         label = new QLabel(Dialog);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(630, 20, 161, 101));
+        label->setGeometry(QRect(613, 2, 191, 150));
         label->setPixmap(QPixmap(QString::fromUtf8("C:/Users/ASUS/Desktop/EmmeciLogo.png")));
         ListPath_Editor = new QTextEdit(Dialog);
         ListPath_Editor->setObjectName(QString::fromUtf8("ListPath_Editor"));

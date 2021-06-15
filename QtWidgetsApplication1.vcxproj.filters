@@ -29,9 +29,15 @@
     <ClCompile Include="Qt_App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <QtMoc Include="DigitalClock.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DigitalCLock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
